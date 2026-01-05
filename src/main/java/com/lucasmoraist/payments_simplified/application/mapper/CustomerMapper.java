@@ -49,7 +49,8 @@ public final class CustomerMapper {
                         DEFAULT_AGENCY,
                         customerDTO.accountNumber(),
                         DEFAULT_ACCOUNT_TYPE,
-                        BigDecimal.ZERO
+                        BigDecimal.ZERO,
+                        new ArrayList<>()
                 ),
                 customerDTO.documents(),
                 customerDTO.paymentKeys()

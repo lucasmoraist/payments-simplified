@@ -15,7 +15,11 @@ public final class AccountMapper {
                 account.getAgency(),
                 account.getAccountNumber(),
                 account.getAccountType(),
-                account.getBalance()
+                account.getBalance(),
+                account.getTransactions()
+                        .stream()
+                        .map(TransactionMapper::toDomain)
+                        .toList()
         );
     }
 
@@ -25,7 +29,11 @@ public final class AccountMapper {
                 account.agency(),
                 account.accountNumber(),
                 account.accountType(),
-                account.balance()
+                account.balance(),
+                account.transactions()
+                        .stream()
+                        .map(TransactionMapper::toEntity)
+                        .toList()
         );
     }
 
