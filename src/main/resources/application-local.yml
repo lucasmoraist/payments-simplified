@@ -8,12 +8,10 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: update
-  rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
-    virtual-host: /
+  security:
+    jwt:
+      secret-key: secret-key-local
+      expires-in: 108000
 
 logging:
   level:

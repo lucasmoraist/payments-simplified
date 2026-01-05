@@ -3,3 +3,7 @@ spring:
     active: ${PROFILE_ACTIVE:local}
   application:
     name: payments-simplified
+  security:
+    jwt:
+      secret-key: ${JWT_SECRET_KEY}
+      expires-in: ${JWT_EXPIRES_IN}
