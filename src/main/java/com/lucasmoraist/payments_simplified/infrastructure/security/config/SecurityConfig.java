@@ -1,5 +1,6 @@
 package com.lucasmoraist.payments_simplified.infrastructure.security.config;
 
+import com.lucasmoraist.payments_simplified.infrastructure.filters.SecurityFilter;
 import com.lucasmoraist.payments_simplified.infrastructure.security.config.properties.AppProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import java.util.Map;
 import java.util.Optional;
@@ -22,6 +24,7 @@ import java.util.Optional;
 public class SecurityConfig {
 
     private final AppProperties appProperties;
+    private final SecurityFilter securityFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
@@ -37,6 +40,7 @@ public class SecurityConfig {
                                 () -> auth.anyRequest().authenticated()
                         )
                 )
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 
