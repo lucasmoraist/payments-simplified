@@ -3,6 +3,7 @@ package com.lucasmoraist.payments_simplified.infrastructure.database.sql.persist
 import com.lucasmoraist.payments_simplified.application.gateway.CustomerPersistence;
 import com.lucasmoraist.payments_simplified.application.mapper.CustomerMapper;
 import com.lucasmoraist.payments_simplified.domain.exceptions.EmailException;
+import com.lucasmoraist.payments_simplified.domain.exceptions.NotFoundException;
 import com.lucasmoraist.payments_simplified.domain.model.Customer;
 import com.lucasmoraist.payments_simplified.infrastructure.database.sql.entity.CustomerEntity;
 import com.lucasmoraist.payments_simplified.infrastructure.database.sql.repository.CustomerRepository;
@@ -32,6 +33,18 @@ public class CustomerPersistenceImpl implements CustomerPersistence {
         CustomerEntity entitySaved = this.repository.save(entity);
         log.debug("Customer saved with id: {}", entity.getId());
         return CustomerMapper.toDomain(entitySaved);
+    }
+
+    @Override
+    public Customer findByEmail(String email) {
+        return this.repository.findByEmail(email)
+                .stream()
+                .map(CustomerMapper::toDomain)
+                .findFirst()
+                .orElseThrow(() -> {
+                    log.error("Customer not found with email: {}", email);
+                    return new NotFoundException("Customer not found with email: " + email);
+                });
     }
 
     private void emailIsExists(String email) {
