@@ -18,5 +18,7 @@ logging:
     com.lucasmoraist: DEBUG
 
 app:
+  security-ignore:
+    apiV1: /api/v1/**
   allowed-origins:
     - http://localhost:3000

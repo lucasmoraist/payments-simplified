@@ -7,3 +7,15 @@ spring:
     jwt:
       secret-key: ${JWT_SECRET_KEY}
       expires-in: ${JWT_EXPIRES_IN}
+
+logging:
+  level:
+    com.lucasmoraist: ${LOG_LEVEL:DEBUG}
+
+app:
+  security-ignore:
+    actuatorHealth: /actuator/health
+    actuatorLiveness: /actuator/health/liveness
+    actuatorReadiness: /actuator/health/readiness
+    login: /api/v1/auth/login
+    register: /api/v1/customer/register
