@@ -1,0 +1,5 @@
+spring:
+  profiles:
+    active: ${PROFILE_ACTIVE:local}
+  application:
+    name: payments-simplified
