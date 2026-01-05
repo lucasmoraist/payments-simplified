@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Log4j2
 @Component
 @RequiredArgsConstructor
@@ -38,12 +40,20 @@ public class CustomerPersistenceImpl implements CustomerPersistence {
     @Override
     public Customer findByEmail(String email) {
         return this.repository.findByEmail(email)
-                .stream()
                 .map(CustomerMapper::toDomain)
-                .findFirst()
                 .orElseThrow(() -> {
                     log.error("Customer not found with email: {}", email);
                     return new NotFoundException("Customer not found with email: " + email);
+                });
+    }
+
+    @Override
+    public Customer findById(UUID customerId) {
+        return this.repository.findById(customerId)
+                .map(CustomerMapper::toDomain)
+                .orElseThrow(() -> {
+                    log.error("Customer not found with id: {}", customerId);
+                    return new NotFoundException("Customer not found with id: " + customerId);
                 });
     }
 
