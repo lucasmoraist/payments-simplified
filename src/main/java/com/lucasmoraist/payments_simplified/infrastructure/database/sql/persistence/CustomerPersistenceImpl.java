@@ -38,6 +38,7 @@ public class CustomerPersistenceImpl implements CustomerPersistence {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Customer findByEmail(String email) {
         return this.repository.findByEmail(email)
                 .map(CustomerMapper::toDomain)
@@ -48,6 +49,7 @@ public class CustomerPersistenceImpl implements CustomerPersistence {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Customer findById(UUID customerId) {
         return this.repository.findById(customerId)
                 .map(CustomerMapper::toDomain)
