@@ -10,4 +10,14 @@ public record Payee(
         String accountType
 ) {
 
+    public Payee(Customer customerPayee) {
+        this(
+                customerPayee.id(),
+                customerPayee.name(),
+                customerPayee.account().agency(),
+                customerPayee.account().accountNumber(),
+                customerPayee.account().accountType()
+        );
+    }
+
 }
