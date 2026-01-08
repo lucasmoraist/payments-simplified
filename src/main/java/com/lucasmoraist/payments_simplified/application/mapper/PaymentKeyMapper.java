@@ -1,8 +1,11 @@
 package com.lucasmoraist.payments_simplified.application.mapper;
 
+import com.lucasmoraist.payments_simplified.domain.model.Customer;
 import com.lucasmoraist.payments_simplified.domain.model.PaymentKey;
 import com.lucasmoraist.payments_simplified.infrastructure.api.web.request.PaymentKeyRequest;
 import com.lucasmoraist.payments_simplified.infrastructure.database.sql.entity.PaymentKeyEntity;
+
+import java.util.List;
 
 public final class PaymentKeyMapper {
 
@@ -14,7 +17,15 @@ public final class PaymentKeyMapper {
         return new PaymentKey(
                 paymentKeyEntity.getId(),
                 paymentKeyEntity.getKeyValue(),
-                null
+                new Customer(
+                        paymentKeyEntity.getCustomer().getId(),
+                        null,
+                        null,
+                        null,
+                        null,
+                        List.of(),
+                        List.of()
+                )
         );
     }
 
