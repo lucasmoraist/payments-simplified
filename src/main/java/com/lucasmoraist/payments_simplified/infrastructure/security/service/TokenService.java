@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.UUID;
 
 @Log4j2
 @Service
@@ -49,6 +50,19 @@ public class TokenService implements TokenGateway {
             String email = decodedJWT.getClaim("email").asString();
             log.debug("Email extracted from token: {}", email);
             return email;
+        } catch (Exception e) {
+            log.error("Error verifying token", e);
+            throw new IllegalArgumentException("Error verifying token", e);
+        }
+    }
+
+    @Override
+    public UUID getIdFromToken(String token) {
+        try {
+            DecodedJWT decodedJWT = verifyToken(token);
+            String id = decodedJWT.getClaim("id").asString();
+            log.debug("ID extracted from token: {}", id);
+            return UUID.fromString(id);
         } catch (Exception e) {
             log.error("Error verifying token", e);
             throw new IllegalArgumentException("Error verifying token", e);
